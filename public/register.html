@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Login</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="container">
+      <h2>Register</h2>
+      <div class="row">
+        <form action="/signup" method="POST" class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="email" name="email" type="text" class="validate">
+              <label for="email">Correo</label>
+            </div>
+            <div class="input-field col s6">
+              <input  id="pass" name="password" type="password" class="validate">
+              <label for="pass">Contraseña</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button class="btn waves-effect waves-light"
+                      type="submit"
+                      >
+                      <!--onclick="registerUser()"-->
+                Submit
+                <i class="material-icons right">send</i>
+              </button>
+              <br>
+              <a href="/log.html">Ya tengo cuenta</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- firebase cliente-->
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAc3U5IYsp-vo5wrvSeu0waNCaFttPJHeE",
+        authDomain: "easyjobs-94e45.firebaseapp.com",
+        databaseURL: "https://easyjobs-94e45.firebaseio.com",
+        projectId: "easyjobs-94e45",
+        storageBucket: "easyjobs-94e45.appspot.com",
+        messagingSenderId: "294301276451"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+    <!-- registro -->
+    <script >
+
+      let email = document.getElementById('email');
+      let pass = document.getElementById('pass');
+
+      registerUser = () =>{
+        firebase.auth().createUserWithEmailAndPassword(email.value, pass.value)
+            .then((a)=>{
+              console.log(a.email);
+            })
+            .catch(err=>{
+              alert(err.message);
+            })
+      }
+
+    </script>
+</body>
+</html>

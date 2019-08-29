@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Login</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="container">
+      <h2>Login</h2>
+      <div class="row">
+        <form method="post" action="/login" class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="email" name="email" type="text" class="validate" >
+              <label for="email">Correo</label>
+            </div>
+            <div class="input-field col s6">
+              <input  id="pass" name="pass" type="password" class="validate">
+              <label for="pass">Contraseña</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button class="btn waves-effect waves-light"
+                      type="button"
+                      onclick="loginUser()">
+                Submit
+                <i class="material-icons right">send</i>
+              </button>
+              <br>
+              <a href="/register.html">No tengo cuenta :C </a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row atoken">
+        <h3>  me ves </h3>
+      </div>
+    </div>
+
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+            crossorigin="anonymous">
+    </script>
+
+    <!-- firebase cliente-->
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+
+
+
+    <!-- Initialize Firebase -->
+    <script>
+      var config = {
+        apiKey: "AIzaSyAc3U5IYsp-vo5wrvSeu0waNCaFttPJHeE",
+        authDomain: "easyjobs-94e45.firebaseapp.com",
+        databaseURL: "https://easyjobs-94e45.firebaseio.com",
+        projectId: "easyjobs-94e45",
+        storageBucket: "easyjobs-94e45.appspot.com",
+        messagingSenderId: "294301276451"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+    <!-- funcion de generar el token  -->
+    <script >
+
+      let email = document.getElementById('email');
+      let pass = document.getElementById('pass');
+
+      $().ready(()=>{
+
+        let rowToken = $('div.atoken')
+        rowToken.toggle(false)
+
+        loginUser = () =>{
+          firebase.auth().signInWithEmailAndPassword(email.value, pass.value)
+              .then( ()=> firebase.auth().currentUser.getIdToken(true) )
+              .then(idToken => {
+
+                rowToken.toggle(true)
+                rowToken.html('')
+                rowToken.html(idToken)
+                console.log(idToken)
+
+              })
+              .catch(err=>{
+                alert(err);
+              })
+
+
+
+        }
+      })
+
+
+
+
+
+    </script>
+</body>
+</html>
